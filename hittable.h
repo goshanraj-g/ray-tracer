@@ -1,7 +1,6 @@
 #ifndef HITTABLE_H
 #define HITTABLE_H
 
-#include "ray.h"
 
 class hit_record
 {
@@ -9,6 +8,16 @@ public:
     point3 p;
     vec3 normal;
     double t;
+    bool front_face;
+
+    void set_face_normal(const ray &r, const vec3 &outward_normal)
+    {
+        // sets the hit record normal vector
+        // outward normal is assumed to have unit length
+
+        front_face = dot(r.direction(), outward_normal) < 0;    // check if it's front faced(ray hitting outside)
+        normal = front_face ? outward_normal : -outward_normal; /// if it's hitting outside, fine; if not, invert the direction
+    }
 };
 
 class hittable
