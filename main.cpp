@@ -7,10 +7,10 @@
 double hit_sphere(const point3 &center, double radius, const ray &r)
 {
     vec3 oc = center - r.origin();
-    auto a = dot(r.direction(), r.direction());
-    auto b = -2.0 * dot(r.direction(), oc);
-    auto c = dot(oc, oc) - radius * radius;
-    auto discriminant = b * b - 4 * a * c;
+    auto a = r.direction().length_squared();
+    auto h = dot(r.direction(), oc);
+    auto c = oc.length_squared() - radius * radius;
+    auto discriminant = h * h - a * c;
     // if there are no intersections, return -1
     if (discriminant < 0)
     {
@@ -20,7 +20,7 @@ double hit_sphere(const point3 &center, double radius, const ray &r)
     {
         // if there's a hit, calculate where the hit is, and use closest point
         // bc, sphere is in front of the camera, and only interested in 1st POC
-        return (-b - std::sqrt(discriminant)) / (2.0 * a);
+        return (-h - std::sqrt(discriminant)) / a;
     }
 }
 
