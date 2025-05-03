@@ -1,7 +1,6 @@
 #ifndef HITTABLE_H
 #define HITTABLE_H
 
-
 class hit_record
 {
 public:
@@ -28,7 +27,7 @@ public:
     // ~ -> destructor (automatically called when an object is out of scope or deleted)
 
     virtual ~hittable() = default; // declare a deconstructor and use compilers automatic behaviour
-    virtual bool hit(const ray &r, double ray_tmin, double ray_tmax, hit_record &rec) const = 0;
+    virtual bool hit(const ray &r, interval ray_t, hit_record &rec) const = 0;
 };
 
 #endif
